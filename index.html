@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Falls Assessment Tool</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#00703c" />
+<script defer src="app.js"></script>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</head>
+<body>
+  <header class="banner">
+    <img src="nhs.png" alt="NHS Logo" class="logo-left" />
+    <h1>Falls Assessment Tool</h1>
+    <img src="secamb.png" alt="SECamb Logo" class="logo-right" />
+  </header>
+
+  <main>
+    <!-- ISTUMBLE -->
+    <section id="istumble">
+      <h2>ISTUMBLE Assessment</h2>
+      <div id="istumble-content"></div>
+      <button id="istumble-evaluate">Evaluate ISTUMBLE</button>
+      <div id="istumble-result" class="risk-result"></div>
+    </section>
+
+    <!-- FRAT -->
+    <section id="frat">
+      <h2>FRAT Assessment</h2>
+      <div id="frat-content"></div>
+      <button id="frat-calculate">Calculate FRAT</button>
+      <div id="frat-result" class="risk-result"></div>
+    </section>
+
+    <!-- OBS & NEWS2 -->
+    <section id="obs-news2">
+      <h2>Observations (OBS) & NEWS2</h2>
+      <div id="obs-content"></div>
+      <div id="news2-result" class="risk-result"></div>
+    </section>
+
+    <!-- Summary -->
+    <section id="summary">
+      <h2>Assessment Summary</h2>
+      <button id="generate-email">Generate Summary</button>
+    </section>
+  </main>
+
+  <!-- AMTS Modal -->
+  <div id="amts-modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.5);">
+    <div style="background:#fff; margin:10% auto; padding:20px; border-radius:10px; max-width:400px; position:relative;">
+      <h3>AMTS - Abbreviated Mental Test Score</h3>
+      <ol>
+        <li>Age: "What is your age?"</li>
+        <li>Time: "What is the time to the nearest hour?"</li>
+        <li>Address: Provide an address for the patient to repeat, ask the patient to recall it at the end of the test. For example, "42 West Street"</li>
+        <li>Year: "What is the Current year?"</li>
+        <li>Place: "What is the name of this place?" or "What is your house number?"</li>
+        <li>Person Recognition: "Can you recognize these two people?" (presenting pictures or pointing out individuals like a family member or carer)</li>
+        <li>Date of Birth: "What is your date of birth?" (day and month are sufficient)</li>
+        <li>World War I: "In what year did World War I begin?" ans: 1914</li>
+        <li>Monarch: "Who is the current monarch?"</li>
+        <li>Counting Backwards: "Please count backwards from 20 to 1."</li>
+      </ol>
+      <button id="close-amts" style="margin-top:15px; background:#00703c; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Close</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Falls Assessment Tool</p>
+    <p>Created By Aaron Ball CFR</p>
+  </footer>
+</body>
+</html>
