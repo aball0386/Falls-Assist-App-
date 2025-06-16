@@ -1,95 +1,144 @@
+/* === GLOBAL === */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #e8fef1;
+  font-family: sans-serif;
   margin: 0;
   padding: 0;
-  color: #003b2b;
+  background: #fff;
+  color: #000;
+  transition: background 0.3s, color 0.3s;
+}
+body.dark {
+  background: #111;
+  color: #fff;
+}
+body.green {
+  --theme-color: #007a33;
+}
+body.red {
+  --theme-color: #b30000;
+}
+body.font-bionic {
+  font-family: "OpenDyslexic", sans-serif;
+}
+body.font-serif {
+  font-family: Georgia, serif;
+}
+body.font-sans {
+  font-family: Arial, sans-serif;
 }
 
-.banner {
-  background-color: #00703c;
-  color: white;
-  padding: 15px 20px;
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--theme-color);
+  color: white;
+  padding: 10px;
 }
-
-.logo-left,
-.logo-right {
-  height: 50px;
-  background-color: white;
-  border-radius: 5px;
-  padding: 4px;
+.logo-left, .logo-right {
+  height: 40px;
 }
-
-h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  flex-grow: 1;
+#app-title {
+  flex: 1;
   text-align: center;
+  font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-main {
-  padding: 20px;
-}
-
+/* === SECTIONS === */
 section {
-  background: white;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  border-bottom: 1px solid #ccc;
 }
-
 label {
   display: block;
-  margin-top: 15px;
-  font-weight: bold;
+  margin-bottom: 10px;
 }
-
-select,
-input[type="number"],
-input[type="text"] {
+input, select, textarea {
   width: 100%;
-  padding: 7px;
-  margin-top: 5px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  padding: 6px;
+  margin-top: 4px;
   box-sizing: border-box;
+  font-size: 1em;
+}
+textarea {
+  resize: vertical;
 }
 
+/* === BUTTONS === */
 button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  background-color: #00703c;
-  color: white;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--theme-color);
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+  z-index: 10;
+}
+footer button {
+  background: white;
+  border: none;
+  border-radius: 4px;
 }
 
-button:hover {
-  background-color: #005a2d;
-}
-
+/* === RISK RESULTS === */
 .risk-result {
-  margin-top: 15px;
-  font-size: 1.2rem;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
   font-weight: bold;
 }
-
 .high-risk {
-  color: red;
+  background: #e60000;
+  color: white;
 }
-
 .medium-risk {
-  color: orange;
+  background: #ff8000;
+  color: white;
+}
+.low-risk {
+  background: #28a745;
+  color: white;
 }
 
-.low-risk {
-  color: green;
+/* === SETTINGS PANEL === */
+#settingsPanel {
+  position: fixed;
+  bottom: 60px;
+  left: 10px;
+  right: 10px;
+  background: #f2f2f2;
+  border: 2px solid #ccc;
+  padding: 15px;
+  z-index: 11;
 }
+#settingsPanel.dark {
+  background: #222;
+  color: #fff;
+  border-color: #444;
+}
+
+/* === TOOLTIP BUTTON === */
+.tooltip {
+  border: none;
+  background: #ddd;
+  font-weight: bold;
+  padding: 2px 6px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+/* === HIDDEN === */
+.hidden {
+  display: none;
+}
+
