@@ -1,80 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="green">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Falls Assessment Tool</title>
-<link rel="stylesheet" href="style.css" />
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#00703c" />
-<script defer src="app.js"></script>
-
-<!-- Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Falls Assessment App</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="cfr_toolbox_icon_192.png" type="image/png" />
 </head>
-<body>
-  <header class="banner">
+<body class="green">
+  <header>
     <img src="nhs.png" alt="NHS Logo" class="logo-left" />
-    <h1>Falls Assessment Tool</h1>
+    <h1 id="app-title">SECamb Falls Assessment</h1>
     <img src="secamb.png" alt="SECamb Logo" class="logo-right" />
   </header>
 
-  <main>
-    <!-- ISTUMBLE -->
-    <section id="istumble">
-      <h2>ISTUMBLE Assessment</h2>
+  <main id="main-form">
+
+    <section>
+      <label>CFR Call Sign <input type="text" id="callsign" placeholder="e.g. CR-0386" /></label>
+      <label>ESR Number <input type="text" id="esr" /></label>
+      <label>Date <input type="date" id="date" /></label>
+      <label>Time <input type="time" id="time" /></label>
+      <label>INC Number <input type="text" id="inc" /></label>
+      <label>Age <input type="number" id="age" min="0" /></label>
+      <label>Sex
+        <select id="sex">
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+    </section>
+
+    <section>
+      <h2>FAST Test <button class="tooltip" onclick="showHelp('fast')">?</button></h2>
+      <label>Face Drooping?
+        <select id="fast-face">
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="Unknown">Unknown</option>
+        </select>
+      </label>
+      <label>Arm Weakness?
+        <select id="fast-arm">
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="Unknown">Unknown</option>
+        </select>
+      </label>
+      <label>Speech Difficulty?
+        <select id="fast-speech">
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="Unknown">Unknown</option>
+        </select>
+      </label>
+    </section>
+
+    <section>
+      <h2>ISTUMBLE Assessment <button class="tooltip" onclick="showHelp('istumble')">?</button></h2>
       <div id="istumble-content"></div>
-      <button id="istumble-evaluate">Evaluate ISTUMBLE</button>
       <div id="istumble-result" class="risk-result"></div>
     </section>
 
-    <!-- FRAT -->
-    <section id="frat">
-      <h2>FRAT Assessment</h2>
-      <div id="frat-content"></div>
-      <button id="frat-calculate">Calculate FRAT</button>
-      <div id="frat-result" class="risk-result"></div>
-    </section>
-
-    <!-- OBS & NEWS2 -->
-    <section id="obs-news2">
-      <h2>Observations (OBS) & NEWS2</h2>
+    <section>
+      <h2>Observations <button class="tooltip" onclick="showHelp('obs')">?</button></h2>
       <div id="obs-content"></div>
-      <div id="news2-result" class="risk-result"></div>
     </section>
 
-    <!-- Summary -->
-    <section id="summary">
-      <h2>Assessment Summary</h2>
-      <button id="generate-email">Generate Summary</button>
+    <section>
+      <h2>Blood Glucose</h2>
+      <label>BM <input type="number" id="bm" /></label>
+      <label>Use Patient’s Normal Range?
+        <select id="bm-normal-toggle">
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </label>
     </section>
+
+    <section>
+      <h2>Medications <button class="tooltip" onclick="showHelp('meds')">?</button></h2>
+      <label>Blood Thinners
+        <select id="medications">
+          <option value="">Select</option>
+          <option value="Aspirin">Aspirin</option>
+          <option value="Clopidogrel (Plavix)">Clopidogrel (Plavix)</option>
+          <option value="Warfarin">Warfarin</option>
+          <option value="Apixaban (Eliquis)">Apixaban (Eliquis)</option>
+          <option value="Rivaroxaban (Xarelto)">Rivaroxaban (Xarelto)</option>
+          <option value="Dabigatran (Pradaxa)">Dabigatran (Pradaxa)</option>
+          <option value="Edoxaban (Lixiana)">Edoxaban (Lixiana)</option>
+          <option value="Heparin">Heparin</option>
+        </select>
+      </label>
+    </section>
+
+    <section>
+      <h2>FRAT Assessment <button class="tooltip" onclick="showHelp('frat')">?</button></h2>
+      <div id="frat-content"></div>
+      <div id="frat-score-display"></div>
+    </section>
+
+    <div id="alerts"></div>
   </main>
 
-  <!-- AMTS Modal -->
-  <div id="amts-modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.5);">
-    <div style="background:#fff; margin:10% auto; padding:20px; border-radius:10px; max-width:400px; position:relative;">
-      <h3>AMTS - Abbreviated Mental Test Score</h3>
-      <ol>
-        <li>Age: "What is your age?"</li>
-        <li>Time: "What is the time to the nearest hour?"</li>
-        <li>Address: Provide an address for the patient to repeat, ask the patient to recall it at the end of the test. For example, "42 West Street"</li>
-        <li>Year: "What is the Current year?"</li>
-        <li>Place: "What is the name of this place?" or "What is your house number?"</li>
-        <li>Person Recognition: "Can you recognize these two people?" (presenting pictures or pointing out individuals like a family member or carer)</li>
-        <li>Date of Birth: "What is your date of birth?" (day and month are sufficient)</li>
-        <li>World War I: "In what year did World War I begin?" ans: 1914</li>
-        <li>Monarch: "Who is the current monarch?"</li>
-        <li>Counting Backwards: "Please count backwards from 20 to 1."</li>
-      </ol>
-      <button id="close-amts" style="margin-top:15px; background:#00703c; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Close</button>
-    </div>
+  <section id="summary-screen" class="hidden">
+    <button onclick="returnToForm()">⬅ Back</button>
+    <div id="summary-output"></div>
+    <button onclick="exportPDF()">📤 Export as PDF</button>
+  </section>
+
+  <div id="settingsPanel" class="hidden">
+    <h3>Settings</h3>
+    <label>Theme:
+      <select id="themeSelect">
+        <option value="green">Ambulance Green</option>
+        <option value="red">Rescue Red</option>
+      </select>
+    </label>
+    <label>Dark Mode:
+      <select id="darkModeToggle">
+        <option value="off">Off</option>
+        <option value="on">On</option>
+      </select>
+    </label>
+    <label>Font:
+      <select id="fontSelect">
+        <option value="sans">Sans-serif</option>
+        <option value="serif">Serif</option>
+        <option value="bionic">Bionic Reading</option>
+      </select>
+    </label>
+    <button onclick="resetApp()">🗑 Reset App</button>
   </div>
 
   <footer>
-    <p>© 2025 Falls Assessment Tool</p>
-    <p>Created By Aaron Ball CFR</p>
+    <button onclick="toggleMenu()">☰</button>
+    <button onclick="showSummary()">📝 Summary</button>
   </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
+
